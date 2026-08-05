@@ -81,17 +81,10 @@ WC_MAX_BET         = int(os.environ.get("WC_MAX_BET", "9999999")) # حداکثر
 WC_POLL_INTERVAL   = int(os.environ.get("WC_POLL_INTERVAL", "600"))  # هر چند ثانیه چک شود (پیش‌فرض: 10 دقیقه)
 WC_COMPETITION     = os.environ.get("WC_COMPETITION", "WC")   # کد مسابقه (WC = FIFA World Cup)
 
-# ─── اتصال به هاست اصلی (معماری چند-هاستی) ───────────────────────────────────
-MAIN_HOST_URL = os.environ.get("MAIN_HOST_URL", "http://localhost:5000")
-HOST_ID = os.environ.get("HOST_ID", "")            # شناسه یکتای این هاست سلف، مثلاً self-host-1
-HOST_NAME = os.environ.get("HOST_NAME", HOST_ID)
-HOST_CAPACITY = int(os.environ.get("HOST_CAPACITY", "200"))
+# ─── هاست‌های سلف (معماری چند-هاستی) ─────────────────────────────────────────
+# کلیدی که فقط برای ثبت‌نام اولیه‌ی یه هاست سلف جدید لازمه (این رو روی هاست
+# اصلی و همه‌ی هاست‌های سلف یکسان ست کنید، جداگانه از secret اختصاصی هر هاست).
 INTERNAL_REGISTER_KEY = os.environ.get("INTERNAL_REGISTER_KEY", "")
-POLL_INTERVAL_SECONDS = int(os.environ.get("POLL_INTERVAL_SECONDS", "15"))
 
-# ─── API داخلی پنل (برای ارتباط با ربات کمکی روی هاست اصلی) ──────────────────
+# ─── API داخلی پنل (برای صدا زدنِ panel_api روی هاست سلفِ صاحبِ هر کاربر) ─────
 PANEL_API_SECRET = os.environ.get("PANEL_API_SECRET", "")
-PANEL_API_PORT = int(os.environ.get("PANEL_API_PORT", "8088"))
-# آدرسی که هاست اصلی می‌تونه از بیرون به این هاست سلف وصل بشه (باید از
-# اینترنت در دسترس باشه، مثلاً https://self-host-1.example.com)
-SELF_HOST_PUBLIC_URL = os.environ.get("SELF_HOST_PUBLIC_URL", "")

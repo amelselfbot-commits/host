@@ -53,7 +53,7 @@ def _run_coro(coro):
     چون خودِ Flask توی یک ترد معمولیِ sync اجرا می‌شه، نمی‌تونیم مستقیم
     await کنیم؛ باید از طریقِ run_coroutine_threadsafe به لوپِ اصلی بفرستیمش.
     """
-    from loop_manager import get_loop
+    from app import get_loop  # import دیرهنگام تا از circular import جلوگیری بشه
     loop = get_loop()
     future = asyncio.run_coroutine_threadsafe(coro, loop)
     return future.result(timeout=30)

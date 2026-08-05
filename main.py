@@ -22,6 +22,7 @@ import threading
 
 import config
 import database as db
+import database_supabase as db_supa
 from remote_bot_manager import bot_manager
 from loop_manager import get_loop, run_async
 
@@ -66,7 +67,7 @@ def _self_heal_watchdog():
 
 def main():
     # ۱. ایجاد جداول (اگر موجود نیستند)
-    db.init_tables()
+    db_supa.init_tables()
 
     import host_registry
     import remote_bot_manager

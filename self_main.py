@@ -89,12 +89,9 @@ def main():
     hb = get_heartbeat_manager()
     hb.start()
 
-    if config.PANEL_API_SECRET:
-        from panel_server import start_panel_server_background
-        start_panel_server_background()
-        print(f"✅ سرور داخلیِ پنل روی پورت {config.PANEL_API_PORT} بالا اومد.")
-    else:
-        print("ℹ️ PANEL_API_SECRET ست نشده — سرور پنل داخلی این هاست راه‌اندازی نشد.")
+    from panel_server import start_panel_server_background
+    start_panel_server_background()
+    print(f"✅ سرور HTTPِ این هاست روی پورتِ محیطی (یا {config.PANEL_API_PORT}) بالا اومد.")
 
     poll_loop()
 

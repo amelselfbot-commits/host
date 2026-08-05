@@ -225,7 +225,7 @@ async def start_helper_bot():
         def _grid(items):
             rows, row = [], []
             for key, title, style in items:
-                row.append(Button.inline(title, data=f"panel_cat_{key}_{owner_tg_id}", style=style or "primary"))
+                row.append(Button.inline(title, data=f"panel_cat_{key}_{owner_tg_id}"))
                 if len(row) == 3:
                     rows.append(row)
                     row = []
@@ -239,13 +239,13 @@ async def start_helper_bot():
         if total_pages > 1:
             nav = []
             if page > 0:
-                nav.append(Button.inline("‹ صفحه قبل", data=f"panel_menu_page_{page - 1}_{owner_tg_id}", style="primary"))
+                nav.append(Button.inline("‹ صفحه قبل", data=f"panel_menu_page_{page - 1}_{owner_tg_id}"))
             if page < total_pages - 1:
-                nav.append(Button.inline("صفحه بعد ›", data=f"panel_menu_page_{page + 1}_{owner_tg_id}", style="primary"))
+                nav.append(Button.inline("صفحه بعد ›", data=f"panel_menu_page_{page + 1}_{owner_tg_id}"))
             if nav:
                 rows.append(nav)
 
-        rows.append([Button.inline("بستن", data=f"panel_close_{owner_tg_id}", style="danger")])
+        rows.append([Button.inline("بستن", data=f"panel_close_{owner_tg_id}")])
         return rows
 
     def _back_target(category_key, owner_tg_id):
@@ -270,8 +270,8 @@ async def start_helper_bot():
             owner_suffix=f"_{owner_tg_id}",
         )
         for label, child_key in cat.get("children", []):
-            buttons.append([Button.inline(label, data=f"panel_cat_{child_key}_{owner_tg_id}", style="primary")])
-        buttons.append([Button.inline("بازگشت", data=_back_target(category_key, owner_tg_id), style="primary")])
+            buttons.append([Button.inline(label, data=f"panel_cat_{child_key}_{owner_tg_id}")])
+        buttons.append([Button.inline("بازگشت", data=_back_target(category_key, owner_tg_id))])
         return buttons
 
     # ─── پاسخ به inline query (وقتی سلف داره نتیجه رو می‌گیره تا کلیک کنه) ───

@@ -21,6 +21,7 @@ import db_cache as cache
 import config
 import host_registry
 from host_api import host_api_bp
+from remote_bot_manager import bot_manager
 
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
@@ -59,19 +60,14 @@ def unhandled_exception(e):
 
 
 # ─── event loop جداگانه برای Telethon ────────────────────────────────────────
-_loop = None
 _login_clients = {}   # {owner_id: TelegramClient} برای فرایند لاگین
 _phone_hashes = {}    # {owner_id: phone_code_hash}
 _phone_numbers = {}   # {owner_id: phone}
 
 
 def get_loop():
-    global _loop
-    if _loop is None or _loop.is_closed():
-        _loop = asyncio.new_event_loop()
-        t = threading.Thread(target=_loop.run_forever, daemon=True)
-        t.start()
-    return _loop
+    from loop_manager import get_loop as _get_loop
+    return _get_loop()
 
 
 def run_async(coro):

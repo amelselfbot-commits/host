@@ -40,11 +40,13 @@ _categories_data = None
 
 
 def _load_categories(force: bool = False):
+    """ساختار منو رو از panel_categories.py (محلی) می‌گیره — بدون نیاز به HTTP."""
     global _categories_data
-    import panel_client
-    data = panel_client.get_categories(force_refresh=force)
-    if data:
-        _categories_data = data
+    from panel_categories import PANEL_CATEGORIES, PANEL_CATEGORY_ORDER
+    _categories_data = {
+        "order": PANEL_CATEGORY_ORDER,
+        "categories": PANEL_CATEGORIES,
+    }
     return _categories_data
 
 
@@ -206,12 +208,13 @@ async def start_helper_bot():
 
     def _menu_buttons(owner_tg_id, page=0):
         """
-        دکمه‌های سطح ۱ به‌صورت شبکه‌ای (۳ ستونه)، رنگی از طریق style واقعی.
-        فقط دکمه‌های «آبی» (primary) بین ۲ صفحه تقسیم می‌شن؛ دکمه‌های سبز
-        (success) و قرمز (danger — شامل موارد غیرفعال مثل «ایموجی پرمیوم»)
-        همیشه توی هر دو صفحه ثابت نشون داده می‌شن، چون تعدادشون کمه و نیازی
-        به صفحه‌بندی ندارن. دکمه‌ی «بستن» هم همیشه ثابته و پیجینیت نمی‌شه.
+        دکمه‌های سطح ۱ به‌صورت شبکه‌ای (۳ ستونه).
+        اگه categories هنوز لود نشده (self-host تازه ثبت شده)، دوباره تلاش می‌کنه.
         """
+        # اگه خالیه، یه‌بار دیگه از self-host بگیر
+        if not _panel_categories():
+            _load_categories()
+
         categories = build_category_menu()
         primary_cats = [c for c in categories if (c[2] or "primary") == "primary"]
         fixed_cats = [c for c in categories if (c[2] or "primary") != "primary"]
